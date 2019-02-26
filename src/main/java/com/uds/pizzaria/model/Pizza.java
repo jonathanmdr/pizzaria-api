@@ -50,10 +50,10 @@ public class Pizza {
 
     @NotNull
     @Min(0)
-    private int valor;
+    private Long valor;
 
     @NotNull
     @Min(0)
-    private int tempo;
+    private Long tempo;
 
 }
