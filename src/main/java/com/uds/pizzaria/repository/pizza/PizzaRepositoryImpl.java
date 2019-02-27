@@ -32,6 +32,7 @@ public class PizzaRepositoryImpl implements PizzaRepositoryQuery {
                 root.get(Pizza_.id),
                 root.get(Pizza_.tamanho).get(Tamanho_.descricao),
                 root.get(Pizza_.sabor).get(Sabor_.descricao),
+                root.get(Pizza_.adicionais).get(String.valueOf(Adicional_.descricao)),
                 root.get(Pizza_.valor),
                 root.get(Pizza_.tempo)));
 
