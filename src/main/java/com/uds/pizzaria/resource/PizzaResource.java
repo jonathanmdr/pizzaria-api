@@ -6,6 +6,8 @@ import com.uds.pizzaria.repository.PizzaRepository;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+
+import com.uds.pizzaria.service.PizzaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
@@ -25,6 +27,9 @@ public class PizzaResource {
     private PizzaRepository pizzaRepository;
 
     @Autowired
+    private PizzaService pizzaService;
+
+    @Autowired
     private ApplicationEventPublisher eventPublisher;
 
     @GetMapping
@@ -41,7 +46,7 @@ public class PizzaResource {
 
     @PostMapping
     public ResponseEntity<Pizza> save(@Valid @RequestBody Pizza pizza, HttpServletResponse response) {
-        Pizza pizzaSalva = pizzaRepository.save(pizza);
+        Pizza pizzaSalva = pizzaService.save(pizza);
 
         eventPublisher.publishEvent(new RecursoCriadoEvent(this, response, pizzaSalva.getId()));
 

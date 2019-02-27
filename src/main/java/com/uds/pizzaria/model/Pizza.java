@@ -1,6 +1,6 @@
 package com.uds.pizzaria.model;
 
-import java.util.List;
+import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -11,7 +11,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -46,14 +45,9 @@ public class Pizza {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "pizza_adicionais", joinColumns = @JoinColumn(name = "idpizza"), inverseJoinColumns = @JoinColumn(name = "idadicional"))
-    private List<Adicional> adicionais;
+    private Set<Adicional> adicionais;
 
-    @NotNull
-    @Min(0)
     private Long valor;
-
-    @NotNull
-    @Min(0)
     private Long tempo;
 
 }
