@@ -3,13 +3,15 @@ package com.uds.pizzaria.resource;
 import com.uds.pizzaria.event.RecursoCriadoEvent;
 import com.uds.pizzaria.model.Pizza;
 import com.uds.pizzaria.repository.PizzaRepository;
-import java.util.List;
+
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import com.uds.pizzaria.service.PizzaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,8 +35,8 @@ public class PizzaResource {
     private ApplicationEventPublisher eventPublisher;
 
     @GetMapping
-    public List<Pizza> findAll() {
-        return pizzaRepository.findAll();
+    public Page<Pizza> findAll(Pageable pageable) {
+        return pizzaRepository.findAll(pageable);
     }
 
     @GetMapping("/{id}")
