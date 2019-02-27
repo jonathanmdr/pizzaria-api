@@ -21,7 +21,7 @@ public class CalculaValor implements PizzaRegrasValor {
 
     @Override
     public Long calculaValorTotal(Pizza pizza) {
-        int valorAddAdicionais, valorTamanho = 0;
+        Long valorAddAdicionais, valorTamanho = new Long(0);
 
         valorTamanho = calculaValorDoTamanho(pizza);
         valorAddAdicionais = calculaValorAdicionalDosAdicionais(pizza);
@@ -29,14 +29,14 @@ public class CalculaValor implements PizzaRegrasValor {
         return new Long(valorTamanho + valorAddAdicionais);
     }
 
-    private int calculaValorDoTamanho(Pizza pizza) {
+    private Long calculaValorDoTamanho(Pizza pizza) {
         Tamanho tamanho = tamanhoRepository.findOne(pizza.getTamanho().getId());
 
         return tamanho.getValor();
     }
 
-    private int calculaValorAdicionalDosAdicionais(Pizza pizza) {
-        int valorAdicional = 0;
+    private Long calculaValorAdicionalDosAdicionais(Pizza pizza) {
+        Long valorAdicional = new Long(0);
         Set<Adicional> adicionalList = pizza.getAdicionais();
 
         for (Adicional adicionalCurrent : adicionalList) {

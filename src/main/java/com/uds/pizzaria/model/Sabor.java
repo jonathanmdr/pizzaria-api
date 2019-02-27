@@ -19,6 +19,6 @@ public class Sabor {
     private Long id;
 
     private String descricao;
-    private int tempo;
+    private Long tempo;
 
 }

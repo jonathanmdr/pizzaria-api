@@ -4,6 +4,7 @@ import com.uds.pizzaria.event.RecursoCriadoEvent;
 import com.uds.pizzaria.model.Pizza;
 import com.uds.pizzaria.repository.PizzaRepository;
 
+import com.uds.pizzaria.repository.projection.ResumoPizza;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
@@ -37,6 +38,11 @@ public class PizzaResource {
     @GetMapping
     public Page<Pizza> findAll(Pageable pageable) {
         return pizzaRepository.findAll(pageable);
+    }
+
+    @GetMapping(params = "resumo")
+    public Page<ResumoPizza> findAllResumo(Pageable pageable) {
+        return pizzaRepository.resumir(pageable);
     }
 
     @GetMapping("/{id}")

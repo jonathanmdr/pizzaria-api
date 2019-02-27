@@ -26,29 +26,29 @@ public class CalculaTempo implements PizzaRegrasTempo {
 
     @Override
     public Long calculaTempoTotal(Pizza pizza) {
-        int tempoAddSabor, tempoAddAdicionais, tempoTamanho = 0;
+        Long tempoAddSabor, tempoAddAdicionais, tempoTamanho = new Long(0);
 
         tempoTamanho = calculaTempoDoTamanho(pizza);
         tempoAddSabor = calculaTempoAdicionalDoSabor(pizza);
         tempoAddAdicionais = calculaTempoAdicionalDosAdicionais(pizza);
 
-        return new Long(tempoTamanho + tempoAddSabor + tempoAddAdicionais);
+        return tempoTamanho + tempoAddSabor + tempoAddAdicionais;
     }
 
-    private int calculaTempoDoTamanho(Pizza pizza) {
+    private Long calculaTempoDoTamanho(Pizza pizza) {
         Tamanho tamanho = tamanhoRepository.findOne(pizza.getTamanho().getId());
 
         return tamanho.getTempo();
     }
 
-    private int calculaTempoAdicionalDoSabor(Pizza pizza) {
+    private Long calculaTempoAdicionalDoSabor(Pizza pizza) {
         Sabor sabor = saborRepository.findOne(pizza.getSabor().getId());
 
         return sabor.getTempo();
     }
 
-    private int calculaTempoAdicionalDosAdicionais(Pizza pizza) {
-        int tempoAdicional = 0;
+    private Long calculaTempoAdicionalDosAdicionais(Pizza pizza) {
+        Long tempoAdicional = new Long(0);
         Set<Adicional> adicionalList = pizza.getAdicionais();
 
         for (Adicional adicionalCurrent : adicionalList) {

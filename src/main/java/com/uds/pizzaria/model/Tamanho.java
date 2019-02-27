@@ -19,7 +19,7 @@ public class Tamanho {
     private Long id;
 
     private String descricao;
-    private int valor;
-    private int tempo;
+    private Long valor;
+    private Long tempo;
 
 }
