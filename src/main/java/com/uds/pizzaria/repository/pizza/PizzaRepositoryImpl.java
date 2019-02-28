@@ -1,17 +1,11 @@
 package com.uds.pizzaria.repository.pizza;
 
-import com.uds.pizzaria.model.Adicional_;
-import com.uds.pizzaria.model.Pizza;
-import com.uds.pizzaria.model.Pizza_;
-import com.uds.pizzaria.model.Sabor_;
-import com.uds.pizzaria.model.Tamanho_;
+import com.uds.pizzaria.model.*;
 import com.uds.pizzaria.repository.projection.ResumoPizza;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
+
+import javax.persistence.*;
+import javax.persistence.criteria.*;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -32,7 +26,6 @@ public class PizzaRepositoryImpl implements PizzaRepositoryQuery {
                 root.get(Pizza_.id),
                 root.get(Pizza_.tamanho).get(Tamanho_.descricao),
                 root.get(Pizza_.sabor).get(Sabor_.descricao),
-                root.get(Pizza_.adicionais).get(String.valueOf(Adicional_.descricao)),
                 root.get(Pizza_.valor),
                 root.get(Pizza_.tempo)));
 
