@@ -5,8 +5,8 @@ import static org.mockito.Mockito.when;
 
 import com.uds.pizzaria.model.Pizza;
 import com.uds.pizzaria.repository.PizzaRepository;
-import com.uds.pizzaria.service.utils.CalculaTempo;
-import com.uds.pizzaria.service.utils.CalculaValor;
+import com.uds.pizzaria.service.utils.CalculaTempoService;
+import com.uds.pizzaria.service.utils.CalculaValorService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,14 +24,14 @@ public class PizzaServiceTest {
     private PizzaRepository pizzaRepository;
 
     @Mock
-    private CalculaTempo calculaTempo;
+    private CalculaTempoService calculaTempoService;
 
     @Mock
-    private CalculaValor calculaValor;
+    private CalculaValorService calculaValorService;
 
     @Before
     public void before() {
-        subject = new PizzaService(pizzaRepository, calculaTempo, calculaValor);
+        subject = new PizzaService(pizzaRepository, calculaTempoService, calculaValorService);
         VALOR_TESTE = new Long(10);
     }
 
@@ -39,8 +39,8 @@ public class PizzaServiceTest {
     public void save() {
         Pizza pizza = mock(Pizza.class);
 
-        when(calculaTempo.calculaTempoTotal(pizza)).thenReturn(VALOR_TESTE);
-        when(calculaValor.calculaValorTotal(pizza)).thenReturn(VALOR_TESTE);
+        when(calculaTempoService.calculaTempoTotal(pizza)).thenReturn(VALOR_TESTE);
+        when(calculaValorService.calculaValorTotal(pizza)).thenReturn(VALOR_TESTE);
 
         when(pizzaRepository.save(pizza)).thenReturn(mock(Pizza.class));
     }

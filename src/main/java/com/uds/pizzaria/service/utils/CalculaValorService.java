@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CalculaValor implements PizzaRegrasValor {
+public class CalculaValorService implements PizzaRegrasValor {
 
     @Autowired
     private TamanhoRepository tamanhoRepository;
