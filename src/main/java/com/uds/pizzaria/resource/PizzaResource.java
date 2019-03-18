@@ -5,6 +5,7 @@ import com.uds.pizzaria.model.Pizza;
 import com.uds.pizzaria.repository.PizzaRepository;
 
 import com.uds.pizzaria.repository.projection.ResumoPizza;
+import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
@@ -38,13 +39,13 @@ public class PizzaResource {
     private ApplicationEventPublisher eventPublisher;
 
     @GetMapping
-    public Page<Pizza> findAll(Pageable pageable) {
-        return pizzaRepository.findAll(pageable);
+    public List<Pizza> findAll() {
+        return pizzaRepository.findAll();
     }
 
     @GetMapping(params = "resumo")
-    public Page<ResumoPizza> findAllResumo(Pageable pageable) {
-        return pizzaRepository.resumir(pageable);
+    public List<ResumoPizza> findAllResumo() {
+        return pizzaRepository.findAllResumo();
     }
 
     @GetMapping("/{id}")
@@ -52,6 +53,13 @@ public class PizzaResource {
         Pizza pizza = pizzaRepository.findOne(id);
 
         return pizza != null ? ResponseEntity.ok(pizza) : ResponseEntity.notFound().build();
+    }
+
+    @GetMapping(value = "/{id}", params = "resumo")
+    public ResponseEntity<ResumoPizza> findByIdResumo(@PathVariable Long id) {
+        ResumoPizza resumo = pizzaRepository.findOneResumo(id);
+
+        return resumo != null ? ResponseEntity.ok(resumo) : ResponseEntity.notFound().build();
     }
 
     @PostMapping
