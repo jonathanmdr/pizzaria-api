@@ -1,10 +1,7 @@
 package com.uds.pizzaria.repository.projection.query.adicional;
 
-import lombok.Getter;
-
 public class ResumoAdicionalSQL {
 
-    @Getter
     private static ResumoAdicionalSQL instance = null;
 
     private StringBuilder sb = new StringBuilder();

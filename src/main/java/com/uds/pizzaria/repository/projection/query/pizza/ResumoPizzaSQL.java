@@ -1,10 +1,7 @@
 package com.uds.pizzaria.repository.projection.query.pizza;
 
-import lombok.Getter;
-
 public class ResumoPizzaSQL {
 
-    @Getter
     private static ResumoPizzaSQL instance = null;
 
     private StringBuilder sb = new StringBuilder();
