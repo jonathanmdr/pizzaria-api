@@ -8,6 +8,7 @@ import com.uds.pizzaria.repository.AdicionalRepository;
 import com.uds.pizzaria.repository.SaborRepository;
 import com.uds.pizzaria.repository.TamanhoRepository;
 import com.uds.pizzaria.service.pizza.PizzaRegrasTempo;
+
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,13 +27,14 @@ public class CalculaTempoService implements PizzaRegrasTempo {
 
     @Override
     public Long calculaTempoTotal(Pizza pizza) {
-        Long tempoAddSabor, tempoAddAdicionais, tempoTamanho = new Long(0);
+        Long tempoAddSabor, tempoAddAdicionais, tempoTamanho, total;
 
         tempoTamanho = calculaTempoDoTamanho(pizza);
         tempoAddSabor = calculaTempoAdicionalDoSabor(pizza);
         tempoAddAdicionais = calculaTempoAdicionalDosAdicionais(pizza);
+        total = tempoTamanho + tempoAddSabor + tempoAddAdicionais;
 
-        return tempoTamanho + tempoAddSabor + tempoAddAdicionais;
+        return total;
     }
 
     private Long calculaTempoDoTamanho(Pizza pizza) {
@@ -48,7 +50,7 @@ public class CalculaTempoService implements PizzaRegrasTempo {
     }
 
     private Long calculaTempoAdicionalDosAdicionais(Pizza pizza) {
-        Long tempoAdicional = new Long(0);
+        Long tempoAdicional = Long.valueOf(0);
         Set<Adicional> adicionalList = pizza.getAdicionais();
 
         for (Adicional adicionalCurrent : adicionalList) {

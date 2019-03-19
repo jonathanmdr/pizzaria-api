@@ -35,16 +35,16 @@ public class Pizza {
     private Long id;
 
     @NotNull
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idtamanho")
     private Tamanho tamanho;
 
     @NotNull
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idsabor")
     private Sabor sabor;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinTable(name = "pizza_adicionais", joinColumns = @JoinColumn(name = "idpizza"), inverseJoinColumns = @JoinColumn(name = "idadicional"))
     private Set<Adicional> adicionais;
 

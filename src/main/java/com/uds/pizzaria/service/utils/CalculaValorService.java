@@ -6,6 +6,7 @@ import com.uds.pizzaria.model.Tamanho;
 import com.uds.pizzaria.repository.AdicionalRepository;
 import com.uds.pizzaria.repository.TamanhoRepository;
 import com.uds.pizzaria.service.pizza.PizzaRegrasValor;
+
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,12 +22,13 @@ public class CalculaValorService implements PizzaRegrasValor {
 
     @Override
     public Long calculaValorTotal(Pizza pizza) {
-        Long valorAddAdicionais, valorTamanho = new Long(0);
+        Long valorAddAdicionais, valorTamanho, total;
 
         valorTamanho = calculaValorDoTamanho(pizza);
         valorAddAdicionais = calculaValorAdicionalDosAdicionais(pizza);
+        total = valorTamanho + valorAddAdicionais;
 
-        return new Long(valorTamanho + valorAddAdicionais);
+        return total;
     }
 
     private Long calculaValorDoTamanho(Pizza pizza) {
@@ -36,7 +38,7 @@ public class CalculaValorService implements PizzaRegrasValor {
     }
 
     private Long calculaValorAdicionalDosAdicionais(Pizza pizza) {
-        Long valorAdicional = new Long(0);
+        Long valorAdicional = Long.valueOf(0);
         Set<Adicional> adicionalList = pizza.getAdicionais();
 
         for (Adicional adicionalCurrent : adicionalList) {

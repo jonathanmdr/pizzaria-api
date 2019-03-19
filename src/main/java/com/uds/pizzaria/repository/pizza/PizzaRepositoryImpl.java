@@ -35,7 +35,7 @@ public class PizzaRepositoryImpl implements PizzaRepositoryQuery {
                 Object[] result = (Object[]) value;
 
                 montaPizzaResumo(resumo, result);
-                resumo.setAdicionais(findListaAdicionaisPizzaById(resumo.getId()));
+                resumo.setAdicionais(findListaAdicionaisByPizzaId(resumo.getId()));
 
                 listResumo.add(resumo);
             }
@@ -52,41 +52,44 @@ public class PizzaRepositoryImpl implements PizzaRepositoryQuery {
         Object value = query.getSingleResult();
         Object[] result = (Object[]) value;
 
-        ResumoPizza resumo = new ResumoPizza();
+        ResumoPizza resumo = null;
 
         if (result != null) {
+            resumo = new ResumoPizza();
+
             montaPizzaResumo(resumo, result);
-            resumo.setAdicionais(findListaAdicionaisPizzaById(id));
+            resumo.setAdicionais(findListaAdicionaisByPizzaId(id));
         }
 
         return resumo;
     }
 
     private void montaPizzaResumo(ResumoPizza resumo, Object[] result) {
-        resumo.setId(new Long(result[0].toString()).longValue());
+        resumo.setId(Long.parseLong(result[0].toString()));
         resumo.setSabor(result[1].toString());
         resumo.setTamanho(result[2].toString());
-        resumo.setValor(new Long(result[3].toString()).longValue());
-        resumo.setTempo(new Long(result[4].toString()).longValue());
+        resumo.setValor(Long.parseLong(result[3].toString()));
+        resumo.setTempo(Long.parseLong(result[4].toString()));
     }
 
-    private List<String> findListaAdicionaisPizzaById(Long id) {
-        Query query1 = manager.createNativeQuery(resumoAdicionalSQL.findAllAdiconaisPizzaByIdResumo().toString());
-        query1.setParameter(1, id);
+    private List<String> findListaAdicionaisByPizzaId(Long id) {
+        Query query = manager.createNativeQuery(resumoAdicionalSQL.findAllAdiconaisPizzaByIdResumo().toString());
+        query.setParameter(1, id);
 
-        List<?> resultList1 = query1.getResultList();
+        List<?> resultList = query.getResultList();
+        List<String> listAdicional = null;
 
-        if (resultList1 != null && resultList1.size() > 0) {
-            List<String> listAdicional = new ArrayList<>();
+        if (resultList != null && resultList.size() > 0) {
+            listAdicional = new ArrayList<>();
 
-            for (Object value1 : resultList1) {
-                listAdicional.add(value1.toString());
+            for (Object value : resultList) {
+                if (value != null) {
+                    listAdicional.add(value.toString());
+                }
             }
-
-            return listAdicional;
         }
 
-        return null;
+        return listAdicional;
     }
 
 }
