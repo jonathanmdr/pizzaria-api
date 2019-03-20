@@ -7,6 +7,9 @@ import com.uds.pizzaria.repository.projection.query.pizza.ResumoPizzaSQL;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
 public class PizzaRepositoryImpl implements PizzaRepositoryQuery {
 
@@ -22,10 +25,11 @@ public class PizzaRepositoryImpl implements PizzaRepositoryQuery {
     }
 
     @Override
-    public List<ResumoPizza> findAllResumo() {
+    public Page<ResumoPizza> findAllResumo(Pageable pageable) {
         Query query = manager.createNativeQuery(pizzaSQL.findAllPizzaResumo().toString());
 
         List<?> resultList = query.getResultList();
+        adicionarRestricoesDePaginacao(query, pageable);
 
         List<ResumoPizza> listResumo = new ArrayList<>();
 
@@ -41,7 +45,7 @@ public class PizzaRepositoryImpl implements PizzaRepositoryQuery {
             }
         }
 
-        return listResumo;
+        return new PageImpl<>(listResumo, pageable, total(resultList));
     }
 
     @Override
@@ -90,6 +94,19 @@ public class PizzaRepositoryImpl implements PizzaRepositoryQuery {
         }
 
         return listAdicional;
+    }
+
+    private void adicionarRestricoesDePaginacao(Query query, Pageable pageable) {
+        int paginaAtual = pageable.getPageNumber();
+        int totalRegistrosPorPagina = pageable.getPageSize();
+        int primeiroRegistroDaPagina = paginaAtual * totalRegistrosPorPagina;
+
+        query.setFirstResult(primeiroRegistroDaPagina);
+        query.setMaxResults(totalRegistrosPorPagina);
+    }
+
+    private Long total(List<?> resultList) {
+        return Long.valueOf(resultList.size());
     }
 
 }

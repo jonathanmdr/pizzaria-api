@@ -8,7 +8,6 @@ import com.uds.pizzaria.event.RecursoCriadoEvent;
 import com.uds.pizzaria.model.Pizza;
 import com.uds.pizzaria.repository.PizzaRepository;
 import com.uds.pizzaria.service.PizzaService;
-import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import org.junit.Before;
 import org.junit.Test;
@@ -43,16 +42,20 @@ public class PizzaResourceTest {
 
     @Test
     public void findAll() {
-        subject.findAll();
-        when(pizzaRepository.findAll()).thenReturn(mock(List.class));
-        verify(pizzaRepository).findAll();
+        Pageable pageable = mock(Pageable.class);
+
+        subject.findAll(pageable);
+        when(pizzaRepository.findAll(pageable)).thenReturn(mock(Page.class));
+        verify(pizzaRepository).findAll(pageable);
     }
 
     @Test
     public void findAllResumo() {
-        subject.findAllResumo();
-        when(pizzaRepository.findAllResumo()).thenReturn(mock(List.class));
-        verify(pizzaRepository).findAllResumo();
+        Pageable pageable = mock(Pageable.class);
+
+        subject.findAllResumo(pageable);
+        when(pizzaRepository.findAllResumo(pageable)).thenReturn(mock(Page.class));
+        verify(pizzaRepository).findAllResumo(pageable);
     }
 
     @Test
